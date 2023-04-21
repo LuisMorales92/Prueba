@@ -1,0 +1,44 @@
+El proyecto fue desarrollado montado de forma local con el programa appserv. La base de datos fue desarrollada en el motor MySQL con phpmyadmin. La versión php utilizada fue la versión 7. La versión de MySQL utilizada fue la versión 8. La versión de appserv utilizada fue la versión 4.9.
+
+La estructura del proyecto es la siguiente:
+
+Carpeta raíz:
+
+El archivo index.php contiene el formulario principal y es en donde debe ejecutarse la página. El archivo comunas.php es un archivo complemento en php que permite realizar la búsqueda de las comunas de forma automática una vez que se selecciona la región. El archivo añadir.php es el archivo que permite registrar los datos del formulario en la base de datos. 
+
+Carpeta config:
+
+Dentro de esta carpeta se encuentra el archivo conexion.php que sirve para la conexión con la base de datos, además de tener los datos de esta.
+
+Carpeta SQL:
+
+En esta carpeta se encuentra la base de datos en formato sql que contiene todas las tablas que conforman la base de datos. La base de datos tiene las siguientes tablas:
+
+Formulario: tabla que se llenara con los datos ingresados en el formulario principal
+Regiones: tabla que contiene todas las regiones del país. Esta tabla ya trae todos los datos registrados.
+Comunas: tabla que contiene todas las comunas del país, además de tener su correspondiente región. Esta tabla ya trae todos los datos registrados.
+Candidatos: tabla que contiene datos de los candidatos. Esta tabla ya trae todos los datos registrados.
+
+Instalación:
+
+Archivos php:
+
+Instalar los archivos en una carpeta raíz a elección, manteniendo la estructura del programa ya antes mencionada. El programa debe partir desde el archivo index.php.
+
+Base de datos:
+
+Para montar la base de datos de forma local, debe crear la base de datos en phpMyadmin con nombre "prueba". Luego de crear la base de datos debe importar el archivo SQL llamado prueba, que contiene todas las tablas de la base con sus respectivos datos.
+
+Acceso a base de datos:
+
+Para que el programa pueda acceder a la base de datos sin problemas, se debe configurar el archivo conexion.php para que los datos de su base local coincidan con el de este archivo. Esto se hace de la siguiente forma:
+
+En la línea 2 del archivo conexion.php, los datos que se deben modificar son: ("localhost","root","root","prueba"), en el cual "localhost" debe ser cambiado por la dirección en donde está montado phpMyadmin, si se instaló de forma local debe mantener el "localhost". Los dos "root" corresponden al usuario y contraseña para acceder a phpMyadmin, para saber que usuario y contraseña tiene, dentro de phpMyadmin, en el apartado cuentas de usuario, se pueden encontrar los datos de usuario que serán utilizados en la conexión a la base de datos. El apartado "prueba" corresponde a la base de datos, solo modificar en caso de crear la base de datos con otro nombre.
+
+Funciones:
+
+El formulario funciona de la siguiente forma:
+
+Ya dentro de index.php, solo se debe llenar la información requerida. El campo región trae los datos directo de la base de datos, por lo que si se hace un cambio dentro de la base de datos en la tabla regiones se reflejara automáticamente en el programa. Lo mismo ocurre para la tabla candidatos. El campo de comunas esta vacío y solo se llenará cuando se seleccione una región, apareciendo en el campo de comunas las comunas correspondientes a la región seleccionada. Luego de llenar el formulario y enviar los datos, antes de pasar al archivo añadir.php, las funciones javascript trabajaran para validar cada uno de los campos para que se cumplan las condiciones solicitadas. El campo nombre y apellido no puede ser enviado sin rellenar. El campo alias permite un mínimo de 5 caracteres y permite letras y números como lo solicitado. El campo rut debe ser ingresado con el siguiente formato: "12345678-9" sin puntos solo con el guion. El campo email no permite enviar si no se llena con formato clásico de correo, o sea "ejemplo@nombre.com", permitiendo direcciones con ".com", ".cl", etc. Los seleccionadores no pueden ser enviados con el campo de seleccionar enviado, ya que el validador no lo dejara pasar. Y finalmente en los checkbox, se debe seleccionar al menos dos opciones o si no el formulario no enviara.
+
+Al momento de enviar el formulario, dentro del archivo añadir.php, este archivo recibirá todos los datos enviados, tomara el valor del campo rut y lo comparara con la base de datos para ver si el rut enviado ya está registrado, si el rut ya existe saldrá un aviso que le dirá que el rut esta registrado mandando de regreso a la pantalla de formulario. En caso de que el rut no exista continuara con el registro a la base de datos, saliendo un aviso de que el registro fue exitoso y mandando de regreso a la pantalla de formulario.
