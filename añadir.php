@@ -17,6 +17,7 @@
 	foreach ($resultadorut as $row) {
 
 		if ($row != 0){
+			$rutvalido = 1;
 			echo'<script type="text/javascript">
         	alert("Rut ya registrado");
         	window.location.href="index.php";
@@ -24,20 +25,22 @@
 		}
 	}
 
-	$sentencia = $mysqli->prepare("INSERT INTO formulario
-	(nombre, alias, rut, email, region_id, comuna_id, candidato_id, web, tv, redes, amigos)
-	VALUES
-	(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-	$sentencia->bind_param("ssssiiissss", $nombre, $alias, $rut, $email, $region, $comuna, $candidato, $web, $tv, $redes, $amigo);
-	if ($sentencia->execute()) { 
-   		echo'<script type="text/javascript">
-        	alert("Regristo Guardado");
-        	window.location.href="index.php";
-        	</script>';
-	} else {
-   		echo'<script type="text/javascript">
-        	alert("Error al regristar");
-        	window.location.href="index.php";
-        	</script>';
+	if ($rutvalido != 1) {
+		$sentencia = $mysqli->prepare("INSERT INTO formulario
+		(nombre, alias, rut, email, region_id, comuna_id, candidato_id, web, tv, redes, amigos)
+		VALUES
+		(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		$sentencia->bind_param("ssssiiissss", $nombre, $alias, $rut, $email, $region, $comuna, $candidato, $web, $tv, $redes, $amigo);
+		if ($sentencia->execute()) { 
+   			echo'<script type="text/javascript">
+        		alert("Registro Guardado");
+        		window.location.href="index.php";
+        		</script>';
+		} else {
+   			echo'<script type="text/javascript">
+        		alert("Error al registrar");
+        		window.location.href="index.php";
+        		</script>';
+		}
 	}
 ?>
