@@ -33,12 +33,39 @@
     				return;
   				}
 
-  			var rut = document.getElementById('rut').value;
-			var validRut =  /^[0-9]+[-|‐]{1}[0-9kK]{1}$/;
-				if(!validRut.test(rut) ){
-					alert('El Rut es invalido');
-					return;
-				}
+  			var rut = document.getElementById("rut").value;
+
+			var rutRegex = /^(\d{1,3}(\.?\d{3})*)\-?([\dkK])$/;
+
+			if (!rutRegex.test(rut)) {
+				alert('El Rut es invalido');
+				return false;
+			}
+
+			rut = rut.replace(/\./g, "");
+			rut = rut.replace("-", "");
+
+			var dv = rut.slice(-1);
+			rut = rut.slice(0, -1);
+
+			var suma = 0;
+			var multiplicador = 2;
+			for (var i = rut.length - 1; i >= 0; i--) {
+				suma += rut.charAt(i) * multiplicador;
+				multiplicador = multiplicador === 7 ? 2 : multiplicador + 1;
+			}
+			var dvEsperado = 11 - (suma % 11);
+
+			if (dvEsperado === 11) {
+				dvEsperado = "0";
+			} else if (dvEsperado === 10) {
+				dvEsperado = "K";
+			}
+
+			if (dv.toString().toUpperCase() !== dvEsperado.toString()) {
+				alert('El Rut es invalido');
+				return;
+			}
 
 			var email = document.getElementById('email').value;
 			var validEmail =  /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
